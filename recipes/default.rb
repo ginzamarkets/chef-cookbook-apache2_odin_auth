@@ -12,7 +12,11 @@ cpan_module "Apache2::Authen::OdinAuth"
 if node.run_list.expand(node.chef_environment).recipes.include?('apache2_odin_auth::server')
   server_node = node
 else
-  server_node = search(:node, "apache2_odin_auth_server_domain:#{node['apache2']['odin_auth']['server_domain']} AND apache2_odin_auth_secret:[* TO *]").first
+  if Chef::Config[:solo]
+    raise "This cookbook needs search. It won't work with chef-solo."
+  else
+    server_node = search(:node, "apache2_odin_auth_server_domain:#{node['apache2']['odin_auth']['server_domain']} AND apache2_odin_auth_secret:[* TO *]").first
+  end
 end
 
 client_config = {
