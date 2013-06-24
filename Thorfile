@@ -7,7 +7,7 @@ require 'shellwords'
 
 class Cookbook < Thor
   COOKBOOK_NAME = 'apache2_odin_auth'
-  COOKBOOK_CATEGORY = 'web server'
+  COOKBOOK_CATEGORY = 'web servers'
 
   include Thor::Actions
 
