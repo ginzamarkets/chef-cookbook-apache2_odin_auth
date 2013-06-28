@@ -19,13 +19,14 @@ else
   end
 end
 
+proto = ( !!server_node['apache2']['odin_auth']['server_ssl_key_path'] ? 'https' : 'http')
 client_config = {
   'permissions' => node['apache2']['odin_auth']['permissions'] ? JSON::load(JSON::dump(node['apache2']['odin_auth']['permissions'])) : [ { 'url' => '', 'who' => 'authed' } ],
   'secret' => server_node['apache2']['odin_auth']['secret'],
   'cookie' => server_node['apache2']['odin_auth']['cookie_name'],
-  'need_auth_url' => "http://#{server_node['apache2']['odin_auth']['server_domain']}/",
-  'invalid_cookie_url' => "http://#{server_node['apache2']['odin_auth']['server_domain']}/?why=invalid-cookie",
-  'not_on_list_url' => "http://#{server_node['apache2']['odin_auth']['server_domain']}/?why=not-on-list",
+  'need_auth_url' => "#{proto}://#{server_node['apache2']['odin_auth']['server_domain']}/",
+  'invalid_cookie_url' => "#{proto}://#{server_node['apache2']['odin_auth']['server_domain']}/?why=invalid-cookie",
+  'not_on_list_url' => "#{proto}://#{server_node['apache2']['odin_auth']['server_domain']}/?why=not-on-list",
   'reload_timeout' => 600 }
 
 file '/etc/apache2/odin_auth.yml' do
