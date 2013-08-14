@@ -15,6 +15,9 @@
 <VirtualHost *:443>
   SSLEngine on
   SSLCertificateFile <%= node['apache2']['odin_auth']['server_ssl_certificate_path'] %>
+<% if node['apache2']['odin_auth']['server_ssl_certificate_chain_path'] -%>
+  SSLCertificateChainFile <%= node['apache2']['odin_auth']['server_ssl_certificate_chain_path'] %>
+<% end -%>
   SSLCertificateKeyFile <%= node['apache2']['odin_auth']['server_ssl_key_path'] %>
 
 <% else -%>
